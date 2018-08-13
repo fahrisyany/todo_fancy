@@ -9,6 +9,6 @@ const{ signUp, signIn,fbsignIn } = require("../controller/homePage");
 // router.get('/',homePage)
 router.post("/signUp", signUp);
 router.post("/signIn", signIn);
-router.post('/fbSignIn',fbsignIn)
+// router.post('/fbSignIn',fbsignIn)
 
 module.exports = router;
