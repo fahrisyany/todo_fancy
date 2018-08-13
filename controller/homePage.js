@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-// const FB = require("fb");
+const FB = require("fb");
 const User = require("../models/user");
 
 module.exports = {
@@ -49,5 +49,55 @@ module.exports = {
       .catch(err => {
         res.status(500).json({ msg: "err", err });
       });
-  }
+  },
+
+
+
+  fbLogin(req,res){
+    FB.setAccessToken(req.headers.fbtoken)
+    FB.api('/me',{
+        fields:['name','email','picture']
+    }).then(response=>{
+        const {name,email,picture} = response
+        User.findOne({email})
+        .then(getUser=>{
+       
+            if(getUser){
+                console.log('siip')
+                let token = jwt.sign({
+                    id:getUser._id,
+                    name,
+                    email,
+                    role:'user'
+                },'asik')
+                
+                res.status(200).json({
+                    message:'success login with facebook',
+                    token,
+                    role,
+                    image,
+                    name
+                })
+            }
+        })
+        .catch(err=>{
+            console.log(err)
+            res.status(400).json({
+                message: err.message
+            })
+        })
+    }).catch(err=>{
+        console.log(err)
+        res.status(400).json({
+            message: err.message
+        })
+    })
+}
+
+
+
+
+
+
+
 };
