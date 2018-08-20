@@ -12,11 +12,8 @@ const {
 } = require("../controllers/todo.js");
 
 router.post("/", isLogin, authUser, createTodo);
-router.put("/:id", isLogin, authUser, showTodo);
-router.delete("/:id", isLogin, authUser, editTodo);
-router.get("/:id", isLogin, authUser, deleteTodo);
+router.get("/", isLogin, authUser, showTodo);
+router.put("/:id", isLogin, authUser, editTodo);
+router.delete("/:id", isLogin, authUser, deleteTodo);
 
 module.exports = router;
-
-
-
