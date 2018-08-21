@@ -7,7 +7,7 @@ new Vue({
     el: '#app',
     data: {
         message: '',
-        logo: "https://avatars2.githubusercontent.com/u/42405296?s=200&v=4",
+        logo: "https://i.imgur.com/zJI0hWZ.png",
         email: '',
         password: '',
         fullname: ''

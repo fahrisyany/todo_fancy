@@ -1,5 +1,5 @@
 {
-  "name": "todo_fancy",
+  "name": "e-commerce",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -31,12 +31,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fahrisyany/todo_fancy.git"
+    "url": "git+https://github.com/fahrisyany/e-commerce-1.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fahrisyany/todo_fancy/issues"
+    "url": "https://github.com/fahrisyany/e-commerce-1/issues"
   },
-  "homepage": "https://github.com/fahrisyany/todo_fancy#readme"
+  "homepage": "https://github.com/fahrisyany/e-commerce-1#readme"
 }

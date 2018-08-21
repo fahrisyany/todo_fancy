@@ -1,15 +1,15 @@
 List of routes user:
 
-| **Route**         | **HTTP** | **Description** | **Parameters**            |
-| ----------------- | -------- | --------------- | ------------------------- |
-| /api/users/signup | POST     | Signup new user | fullname, email, password |
-| /api/users/signin | POST     | Signin user     | email, password           |
+| **Route** | **HTTP** | **Description** | **Parameters**            |
+| --------- | -------- | --------------- | ------------------------- |
+| /signup   | POST     | Signup new user | fullname, email, password |
+| /signin   | POST     | Signin user     | email, password           |
 
 List of routes sticker:
 
-| **Route**     | **HTTP** | **Description**  | **Parameters** |
-| ------------- | -------- | ---------------- | -------------- |
-| /api/todo     | GET      | Get all task     |                |
-| /api/todo     | POST     | Add new task     |                |
-| /api/todo/:id | delete   | delete all task  |                |
-| /api/todo/:id | put      | Adeditd new task |                |
+| **Route**     | **HTTP** | **Description** | **Parameters** |
+| ------------- | -------- | --------------- | -------------- |
+| /todo         | GET      | Get all task    |                |
+| /todo         | POST     | Add new task    |                |
+| /api/todo/:id | delete   | delete task     |                |
+| /api/todo/:id | put      | edit a task     |                |
