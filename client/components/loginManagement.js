@@ -33,7 +33,7 @@ Vue.component('form-login', {
     }, 
     methods: {
       login() {
-        axios.post('http://localhost:3030/api/users/signin', {
+        axios.post('http://localhost:3030/signin', {
           username: this.username,
           password: this.password,
         })

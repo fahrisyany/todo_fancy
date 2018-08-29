@@ -11,7 +11,7 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 mongoose.connect(
-  "mongodb://localhost:27017/prototype",
+  "mongodb://ade:masuk2311@ds137812.mlab.com:37812/todo-fancy",
   { useNewUrlParser: true }
 );
 const db = mongoose.connection;
@@ -31,8 +31,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use("/api/users", usersRouter);
-app.use("/api/todo", todoRouter);
+app.use("/", usersRouter);
+app.use("/todo", todoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

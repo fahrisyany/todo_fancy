@@ -13,14 +13,8 @@ const todoSchema = new Schema(
       type: String
     },
 
-    // date: {
-    //   required: [true, "please input your date task"],
-    //   type: Date
-    // },
-    status: {
-      enum: [true, false],
-      default: false,
-      type: Boolean
+    done: {
+      default: false
     }
   },
   {

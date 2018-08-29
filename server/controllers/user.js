@@ -47,7 +47,9 @@ module.exports = {
       });
   },
   signinFacebook: (req, res) => {
-    const { accessToken, userID } = req.body;
+    const { accessToken, userID } = req.headers;
+    console.log(`AC==>`,accessToken);
+    
     let url_user_info = `https://graph.facebook.com/me?fields=id,name,email&access_token=${accessToken}`;
     axios
       .get(url_user_info)

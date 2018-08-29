@@ -37,54 +37,54 @@ Vue.component('modal-upload', {
     }
   },
   methods: {
-    imageUpload() {
-      let formData = new FormData()
-      formData.append('image', this.image)
-      axios.post('http://104.197.64.216/upload', formData)
-        .then(result => {
-          let imgUrl = result.data.link
-          axios({
-            method: 'POST',
-            url: 'http://104.197.64.216/api/stickers',
-            data: {
-              name: this.name,
-              imageUrl: imgUrl
-            },
-            headers: {
-              'token': localStorage.getItem('token')
-            }
-          })
-            .then(() => {
-              swal(
-                'Upload Success!',
-                'Stickergram, Inc',
-                'success'
-              )
-              setTimeout(() => {
-                window.location = 'http://localhost:8080/index.html'
-              }, 2000)
-            })
-            .catch(err => {
-              swal({
-                type: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-                footer: '<a href>Why do I have this issue?</a>'
-              })
-            })
-        })
-        .catch(err => {
-          swal({
-            type: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-            footer: '<a href>Why do I have this issue?</a>'
-          })
-        })
-    },
-    processFile(data) {
-      this.image = data.files[0]
-    },
+    // imageUpload() {
+    //   let formData = new FormData()
+    //   formData.append('image', this.image)
+    //   axios.post('http://104.197.64.216/upload', formData)
+    //     .then(result => {
+    //       let imgUrl = result.data.link
+    //       axios({
+    //         method: 'POST',
+    //         url: 'http://104.197.64.216/api/stickers',
+    //         data: {
+    //           name: this.name,
+    //           imageUrl: imgUrl
+    //         },
+    //         headers: {
+    //           'token': localStorage.getItem('token')
+    //         }
+    //       })
+    //         .then(() => {
+    //           swal(
+    //             'Upload Success!',
+    //             'Stickergram, Inc',
+    //             'success'
+    //           )
+    //           setTimeout(() => {
+    //             window.location = 'http://localhost:8080/index.html'
+    //           }, 2000)
+    //         })
+    //         .catch(err => {
+    //           swal({
+    //             type: 'error',
+    //             title: 'Oops...',
+    //             text: 'Something went wrong!',
+    //             footer: '<a href>Why do I have this issue?</a>'
+    //           })
+    //         })
+    //     })
+    //     .catch(err => {
+    //       swal({
+    //         type: 'error',
+    //         title: 'Oops...',
+    //         text: 'Something went wrong!',
+    //         footer: '<a href>Why do I have this issue?</a>'
+    //       })
+    //     })
+    // },
+    // processFile(data) {
+    //   this.image = data.files[0]
+    // },
     
   }
 })

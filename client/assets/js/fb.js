@@ -29,10 +29,12 @@ function checkLoginState() {
     if (response.status === "connected") {
       axios
         .post(
-          "http://localhost:3000/api/users/signin/facebook",
+          "http://localhost:3000/signin/facebook",
           response.authResponse
         )
         .then(result => {
+          console.log('yesss');
+          
           localStorage.setItem("token", result.data.token);
           window.location = "http://localhost:8080/index.html";
         })

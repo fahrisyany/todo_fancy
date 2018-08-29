@@ -15,7 +15,7 @@ new Vue({
         login: function() {
             axios({
                 method:'POST',
-                url:'http://localhost:3000/api/users/signin',
+                url:'http://localhost:3000/signin',
                 data: {
                     email: this.email,
                     password: this.password

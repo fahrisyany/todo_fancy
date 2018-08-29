@@ -4,10 +4,33 @@ Vue.component("todo", {
     <div class="col-md-6">
     <h1 class="text-center">Todolist</h1>
     <hr>
-    <input type="text" class="form-control" placeholder="Input todolist & enter" v-model="todo.name" v-on:keyup.enter="addTodo">
+    <input type="text" class="form-control" placeholder="Input todolist & enter" v-model="task" v-on:keyup.enter="addTodo">
     <hr>
     <ul class="list-group">
-    <todo-item v-for="item,index in todos" v-bind:item="item" v-bind:key="index" v-on:toggleTodo="toggleTodo" v-on:deleteTodo="deleteTodo"></todo-item>
+    <div v-for="item,index in todos" v-bind:item="item" v-bind:key="index">
+    
+    <div class="card">
+    <div class="card-body">
+    {{item.task}}
+    <button type="button" class="btn btn-success" @click="deleteTodo(index)">Done</button>
+    <button type="button" class="btn btn-warning" v-on:click="edit(index),getOneTodo(index)">Edit</button>
+    <br>
+    <div class="form-group" v-if="editmode">
+    <form @submit.prevent="editTask(index)">
+    <label for="usr">Edit Task:</label>
+
+    <input type="text" class="form-control" id="usr" :placeholder="item.task" v-model="taskEdit">
+    <br>
+    <button type="submit" class="btn btn-info">Info</button>
+    
+    </form>
+    
+    </div>
+    </div>
+    </div>
+    
+    
+    </div>
     </ul>
     </div>
     </div>
@@ -15,60 +38,172 @@ Vue.component("todo", {
   data: function() {
     return {
       todos: [],
-      todo: {
-        name: "",
-        done: false
-      }
+      task: "",
+      editmode: false,
+      taskEdit: ""
     };
   },
 
   methods: {
     addTodo() {
-      if (this.todo.name != "") {
-        this.todos.push(this.todo);
-        this.todo = {
-          name: "",
-          done: false
-        };
-      }
+      axios({
+        method: "POST",
+        url: "http://localhost:3000/todo",
+        data: {
+          task: this.task
+        },
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          token: localStorage.getItem("token")
+        }
+      })
+        .then(() => {
+          console.log("nice");
+          this.getTodo();
+          this.task = "";
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
-    toggleTodo(todo) {
-      let index = this.todos.indexOf(todo);
-      this.todos[index].done = !this.todos[index].done;
+
+    getTodo() {
+      let token = localStorage.getItem("token");
+
+      axios
+        .get(
+          "http://localhost:3000/todo",
+          {},
+          {
+            headers: {
+              token
+            }
+          }
+        )
+        .then(todo => {
+          this.todos = todo.data.found;
+        });
     },
-    deleteTodo(todo) {
-      let index = this.todos.indexOf(todo);
-      this.todos.splice(index, 1);
+
+    deleteTodo(index) {
+      let choosenTaskId = this.todos[index]._id;
+      console.log(`==>`, choosenTaskId);
+
+      let token = localStorage.getItem("token");
+
+      axios
+        .delete(
+          `http://localhost:3000/todo/${choosenTaskId}`,
+          {},
+          {
+            headers: {
+              token
+            }
+          }
+        )
+        .then(todo => {
+          console.log("success");
+          this.getTodo();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    edit: function(data) {
+      this.editmode = !this.editmode;
+    },
+
+    getOneTodo(index) {
+      let choosenTaskId = this.todos[index]._id;
+      // console.log(choosenTaskId);
+
+      axios({
+        method: "GET",
+        url: `http://localhost:3000/todo/${choosenTaskId}`,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          token: localStorage.getItem("token")
+        }
+      })
+        .then(todo => {
+          console.log(todo.data.found.task);
+
+          // this.todos = todo.data.found;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    editTask: function(index) {
+      let token = localStorage.getItem("token");
+      let choosenTaskId = this.todos[index]._id;
+
+      console.log(choosenTaskId);
+
+      axios({
+        method: "GET",
+        url: `https://aws.random.cat/meow`,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          token: localStorage.getItem("token")
+        }
+      })
+        .then(result => {
+          console.log(result);
+          
+          this.message = "success";
+        })
+        .catch(err => {
+          console.log("gagal");
+
+          this.message = err.message;
+        });
     }
+  },
+  created() {
+    this.getTodo();
   }
 });
 
-Vue.component("todo-item", {
-  props: ["item"],
-  template: `<li class="list-group-item" v-bind:style="isActive">{{ item.name }}
-    <button type="button" class="btn btn-success float-right" v-on:click="toggleTodo">
-    &or;
-    </button>
-    <button type="button" class="btn btn-danger float-right" aria-label="Close" v-on:click="deleteTodo">
-    <span aria-hidden="true">&times;</span>
-    </button>
-    </li>`,
-
-  methods: {
-    toggleTodo() {
-      this.$emit("toggleTodo", this.item);
-    },
-    deleteTodo() {
-      this.$emit("deleteTodo", this.item);
-    }
+Vue.component("cat-image", {
+  template: `
+  <img :src="image" hspace="20">
+  `,
+  data: function() {
+    return {
+      image:"",
+     
+    };
   },
-  computed: {
-    isActive() {
-      if (this.item.done) {
-        return "text-decoration:line-through";
-      }
+  methods: {
+    getImageCat() {
+      axios({
+        method: "GET",
+        url: `https://aws.random.cat/meow`,
+        // headers: {
+        //   "Access-Control-Allow-Origin": "*"
+        // }
+      })
+        .then(image => {
+          this.image=(image.data.file);
+
+          // this.todos = todo.data.found;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
-  }
+    // toggleTodo() {
+    //   this.$emit("toggleTodo", this.item);
+    // },
+    // deleteTodo() {
+    //   this.$emit("deleteTodo", this.item);
+    // }
+  },
+created(){
+  this.getImageCat()
+}
 });
 
 var app = new Vue({

@@ -4,9 +4,10 @@ const Todo = require("../models/Todo");
 
 module.exports = {
   createTodo: function(req, res) {
-    const { task } = req.body;
+    const { task, done } = req.body;
     Todo.create({
-      task
+      task,
+      done
     })
       .then(task => {
         res.status(200).json({
@@ -60,6 +61,17 @@ module.exports = {
         res
           .status(200)
           .json({ msg: `Task id = ${objectId(req.params.id)} deleted` });
+      })
+      .catch(err => {
+        res.status(500).json({ msg: "err", err });
+      });
+  },
+  getOneTodo(req, res) {
+    Todo.findOne({ _id: req.params.id })
+      .then(found => {
+        res
+          .status(200)
+          .json({ msg: `Todo id = ${req.params.id} found`, found });
       })
       .catch(err => {
         res.status(500).json({ msg: "err", err });

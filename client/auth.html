@@ -53,7 +53,7 @@
                 if (response.status === "connected") {
                     axios
                         .post(
-                            "http://localhost:3000/api/users/signin/facebook",
+                            "http://localhost:3000/facebook",
                             response.authResponse
                         )
                         .then(result => {
