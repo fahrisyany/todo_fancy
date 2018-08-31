@@ -16,7 +16,7 @@ new Vue({
         signup: function() {
             axios({
                 method:'POST',
-                url:'http://localhost:3000/signup',
+                url:'http://35.240.228.34/signup',
                 data: {
                     fullname: this.fullname,
                     email: this.email,

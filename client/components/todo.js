@@ -48,7 +48,7 @@ Vue.component("todo", {
     addTodo() {
       axios({
         method: "POST",
-        url: "http://localhost:3000/todo",
+        url: "http://35.240.228.34/todo",
         data: {
           task: this.task
         },
@@ -72,7 +72,7 @@ Vue.component("todo", {
 
       axios
         .get(
-          "http://localhost:3000/todo",
+          "http://35.240.228.34/todo",
           {},
           {
             headers: {
@@ -93,7 +93,7 @@ Vue.component("todo", {
 
       axios
         .delete(
-          `http://localhost:3000/todo/${choosenTaskId}`,
+          `http://35.240.228.34/todo/${choosenTaskId}`,
           {},
           {
             headers: {
@@ -119,7 +119,7 @@ Vue.component("todo", {
 
       axios({
         method: "GET",
-        url: `http://localhost:3000/todo/${choosenTaskId}`,
+        url: `http://35.240.228.34/todo/${choosenTaskId}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
           token: localStorage.getItem("token")
@@ -142,8 +142,11 @@ Vue.component("todo", {
       console.log(choosenTaskId);
 
       axios({
-        method: "GET",
-        url: `https://aws.random.cat/meow`,
+        method: "PUT",
+        url: `http://35.240.228.34/todo/${choosenTaskId}`,
+        data:{
+          task:this.taskEdit
+        },
         headers: {
           "Access-Control-Allow-Origin": "*",
           token: localStorage.getItem("token")
@@ -151,7 +154,8 @@ Vue.component("todo", {
       })
         .then(result => {
           console.log(result);
-          
+          this.getTodo()
+          this.editmode=false
           this.message = "success";
         })
         .catch(err => {

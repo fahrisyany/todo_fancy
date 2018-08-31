@@ -21,7 +21,7 @@ window.fbAsyncInit = function() {
 })(document, "script", "facebook-jssdk");
 const access_token = localStorage.getItem("token");
 if (access_token) {
-  window.location = "http://localhost:8080/index.html";
+  window.location = "http://35.240.228.34/index.html";
 }
 function checkLoginState() {
   FB.getLoginStatus(function(response) {
@@ -29,14 +29,14 @@ function checkLoginState() {
     if (response.status === "connected") {
       axios
         .post(
-          "http://localhost:3000/signin/facebook",
+          "http://35.240.228.34/signin/facebook",
           response.authResponse
         )
         .then(result => {
           console.log('yesss');
           
           localStorage.setItem("token", result.data.token);
-          window.location = "http://localhost:8080/index.html";
+          window.location = "http://35.240.228.34/index.html";
         })
         .catch(err => {
           console.log("masuk error fb");
