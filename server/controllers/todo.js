@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("../models/user");
-const Todo = require("../models/Todo");
+const Todo = require("../models/todo");
 
 module.exports = {
   createTodo: function(req, res) {
